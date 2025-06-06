@@ -28,3 +28,21 @@ Trong giao diện, các quân bài được hiển thị bằng tiếng Việt, 
 ## Web Version
 
 Open `web/index.html` in a browser to play the game directly in your browser. The interface and tile names are displayed in Vietnamese. Gameplay is the same: click a tile to select it and press **Đánh** to discard. AI opponents will automatically take their turns.
+
+## Testing and Linting
+
+Run the automated tests with:
+
+```bash
+pytest
+```
+
+Check code style using flake8:
+
+```bash
+flake8 mahjong_game.py
+```
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.

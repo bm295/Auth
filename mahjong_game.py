@@ -1,3 +1,8 @@
+"""
+Simple Vietnamese Mahjong game using Pygame.
+A human player competes against three AI opponents.
+"""
+
 import pygame
 import random
 import sys
@@ -37,6 +42,9 @@ def to_vietnamese(tile):
     return f"{NUMBER_NAMES.get(num, num)} {SUIT_NAMES.get(suit, suit)}"
 
 class Player:
+    """Game participant holding tiles.
+    AI players discard randomly.
+    """
     def __init__(self, name, is_human=False):
         self.name = name
         self.is_human = is_human
@@ -53,6 +61,7 @@ class Player:
         return self.hand.pop(idx)
 
 class MahjongGame:
+    """Main game loop and rendering logic."""
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -85,6 +94,7 @@ class MahjongGame:
         return deck
 
     def run(self):
+        """Main loop processing events and drawing each frame."""
         while self.running:
             self.handle_events()
             self.draw()
@@ -92,6 +102,7 @@ class MahjongGame:
             self.clock.tick(FPS)
 
     def handle_events(self):
+        """Handle user input and AI turns."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
@@ -116,6 +127,7 @@ class MahjongGame:
         self.current_player().draw_tile(self.deck)
 
     def get_tile_index(self, pos):
+        """Return index of clicked tile in the player hand."""
         hand = self.current_player().hand
         base_x = (WIDTH - (TILE_W + MARGIN) * len(hand)) // 2
         base_y = HEIGHT - TILE_H - MARGIN
@@ -130,6 +142,7 @@ class MahjongGame:
         return None
 
     def draw(self):
+        """Render all game elements."""
         self.screen.fill(BOARD_COLOR)
         self.draw_ai_players()
         self.draw_player_hand()
@@ -137,6 +150,7 @@ class MahjongGame:
         self.screen.blit(msg, (10, 10))
 
     def draw_ai_players(self):
+        """Display AI player information."""
         for i, p in enumerate(self.players[1:], start=1):
             text = f"{p.name}: {len(p.hand)} quân"
             img = self.font.render(text, True, TEXT_COLOR)
@@ -149,6 +163,7 @@ class MahjongGame:
             self.screen.blit(img, pos)
 
     def draw_player_hand(self):
+        """Render the human player's hand."""
         hand = self.players[0].hand
         base_x = (WIDTH - (TILE_W + MARGIN) * len(hand)) // 2
         base_y = HEIGHT - TILE_H - MARGIN
