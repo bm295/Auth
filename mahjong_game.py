@@ -3,12 +3,38 @@ import random
 import sys
 
 WIDTH, HEIGHT = 800, 600
-TILE_W, TILE_H = 40, 60
+TILE_W, TILE_H = 80, 60
 MARGIN = 5
 BOARD_COLOR = (0, 128, 0)
 TEXT_COLOR = (0, 0, 0)
 HIGHLIGHT_COLOR = (255, 200, 200)
 FPS = 30
+
+# Mapping for Vietnamese tile names
+NUMBER_NAMES = {
+    '1': 'Nhất',
+    '2': 'Nhị',
+    '3': 'Tam',
+    '4': 'Tứ',
+    '5': 'Ngũ',
+    '6': 'Lục',
+    '7': 'Thất',
+    '8': 'Bát',
+    '9': 'Cửu',
+}
+
+SUIT_NAMES = {
+    'B': 'Sách',  # Bamboo
+    'C': 'Văn',   # Dots
+    'D': 'Vạn',   # Characters
+}
+
+def to_vietnamese(tile):
+    """Convert an internal tile code like '1B' to a Vietnamese name."""
+    if len(tile) != 2:
+        return tile
+    num, suit = tile[0], tile[1]
+    return f"{NUMBER_NAMES.get(num, num)} {SUIT_NAMES.get(suit, suit)}"
 
 class Player:
     def __init__(self, name, is_human=False):
@@ -30,15 +56,15 @@ class MahjongGame:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption('Mahjong')
+        pygame.display.set_caption('Mạt chược')
         self.font = pygame.font.SysFont(None, 24)
         self.clock = pygame.time.Clock()
         self.deck = self.create_tiles()
         self.players = [
-            Player('You', True),
-            Player('AI 1'),
-            Player('AI 2'),
-            Player('AI 3'),
+            Player('Bạn', True),
+            Player('Máy 1'),
+            Player('Máy 2'),
+            Player('Máy 3'),
         ]
         for _ in range(13):
             for p in self.players:
@@ -46,7 +72,7 @@ class MahjongGame:
         self.current = 0
         self.selected_idx = None
         self.running = True
-        self.message = 'Click a tile and press SPACE to discard'
+        self.message = 'Chọn quân bài và nhấn SPACE để đánh'
 
     def create_tiles(self):
         suits = ['B', 'C', 'D']
@@ -112,7 +138,7 @@ class MahjongGame:
 
     def draw_ai_players(self):
         for i, p in enumerate(self.players[1:], start=1):
-            text = f"{p.name}: {len(p.hand)} tiles"
+            text = f"{p.name}: {len(p.hand)} quân"
             img = self.font.render(text, True, TEXT_COLOR)
             if i == 1:
                 pos = (10, 50)
@@ -131,7 +157,8 @@ class MahjongGame:
             color = HIGHLIGHT_COLOR if i == self.selected_idx else (255, 255, 255)
             pygame.draw.rect(self.screen, color, rect)
             pygame.draw.rect(self.screen, TEXT_COLOR, rect, 1)
-            img = self.font.render(tile, True, TEXT_COLOR)
+            tile_text = to_vietnamese(tile)
+            img = self.font.render(tile_text, True, TEXT_COLOR)
             img_rect = img.get_rect(center=rect.center)
             self.screen.blit(img, img_rect)
 
