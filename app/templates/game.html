@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <title>Bàn chơi</title>
+    <style>
+        .tile-btn {margin: 3px;}
+    </style>
+</head>
+<body>
+    <h2>Người chơi</h2>
+    <p>Bài còn lại trong ủ: {{ deck_remaining }}</p>
+    <form action="{{ url_for('main.draw') }}" method="get">
+        <button type="submit">Rút</button>
+    </form>
+    <form action="{{ url_for('main.discard') }}" method="post">
+        {% for tile in hand %}
+            <button class="tile-btn" name="tile" value="{{ tile }}" type="submit">{{ tile }}</button>
+        {% endfor %}
+    </form>
+    <h3>Lịch sử</h3>
+    <ul>
+        {% for line in history %}
+        <li>{{ line }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
