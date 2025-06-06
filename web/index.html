@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Mạt chược Web</title>
+    <style>
+        body { font-family: sans-serif; background-color: #008000; color: #000; }
+        #player-hand div {
+            display: inline-block;
+            padding: 8px;
+            margin: 4px;
+            background: #fff;
+            border: 1px solid #000;
+            cursor: pointer;
+        }
+        #player-hand .selected { background: #ffcccc; }
+        .ai-info { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Mạt chược Web</h1>
+    <div id="ai-players"></div>
+    <p id="message">Chọn một quân bài và nhấn "Đánh"</p>
+    <div id="player-hand"></div>
+    <br>
+    <button id="discard-btn">Đánh</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
