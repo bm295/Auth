@@ -1,10 +1,14 @@
-# Web Game Mạt Chược
+# Web Game Football Manager
 
-Đấy là một dự án minh họa game Mạt Chược đơn giản bằng Python và Flask. Trò chơi cho phép người chơi đấu với ba đối thủ do máy điều khiển.
+Đây là một dự án minh họa trò chơi Quản lý bóng đá đơn giản bằng Python và Flask.
+Bạn điều khiển một đội bóng gồm 11 cầu thủ và thi đấu với các câu lạc bộ do máy
+điều khiển.
 
-Bộ bài mặc định gồm 160 quân, trong đó 108 quân nạc chia đều cho ba hàng **Vạn**, **Sách** và **Văn**. Ngoài ra còn có 16 quân gió, 12 quân rồng, 4 quân hoa (**Mai**, **Lan**, **Cúc**, **Trúc**). Các nhóm đặc biệt khác mỗi nhóm có 4 quân gồm Bốn mùa (**Xuân**, **Hạ**, **Thu**, **Đông**), Tứ Hoàng (1–4), Tứ Hậu (1–4), Khung Xanh (**Tổng**, **Thùng**, **Soọc**, **Màn**) và Khung Đỏ (**Hoa**, **Hỷ**, **Nguyên**, **Hợp**).
+Mỗi cầu thủ có chỉ số năng lực ngẫu nhiên từ 60 đến 90. Khi bắt đầu trận đấu,
+kết quả được tính dựa trên chỉ số trung bình của đội bạn và đội đối phương.
 
-Chú ý: Mã nguồn được tối giản hóa để làm mô hình minh họa, không phải là bản Mạt Chược hoàn chỉnh.
+Chú ý: Mã nguồn được tối giản hóa để làm mô hình minh họa, không phải là game
+Quản lý bóng đá hoàn chỉnh.
 
 ## Cài đặt
 
