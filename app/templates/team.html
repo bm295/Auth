@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <title>Đội bóng</title>
+</head>
+<body>
+    <h2>{{ team.name }}</h2>
+    <ul>
+        {% for p in team.players %}
+        <li>{{ p.name }} ({{ p.rating }})</li>
+        {% endfor %}
+    </ul>
+    <form action="{{ url_for('main.match') }}" method="get">
+        <button type="submit">Đá giao hữu</button>
+    </form>
+    <h3>Kết quả gần đây</h3>
+    <ul>
+        {% for line in history %}
+        <li>{{ line }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
