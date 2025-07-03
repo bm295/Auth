@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
     <meta charset="UTF-8" />
-    <title>Football Manager</title>
+    <title>Distributed Counter</title>
 </head>
 <body>
-    <h1>Chào mừng đến với game Quản lý bóng đá</h1>
-    <a href="{{ url_for('main.team') }}">Xem đội bóng</a>
+    <h1>Simple Distributed Counter</h1>
+    <p>Current value: {{ value }}</p>
+    <form action="{{ url_for('main.increment') }}" method="post">
+        <button type="submit">Increment</button>
+    </form>
 </body>
 </html>
