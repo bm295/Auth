@@ -1,11 +1,26 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
     <meta charset="UTF-8" />
-    <title>Football Manager</title>
+    <title>Distributed Resources</title>
 </head>
 <body>
-    <h1>Chào mừng đến với game Quản lý bóng đá</h1>
-    <a href="{{ url_for('main.team') }}">Xem đội bóng</a>
+    <h1>Distributed Resource Counter</h1>
+    <ul>
+        {% for name, count in resources.items() %}
+        <li>
+            {{ name }}: {{ count }}
+            <form action="{{ url_for('main.increment', name=name) }}" method="post" style="display:inline;">
+                <button type="submit">+1</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add Resource</h2>
+    <form action="{{ url_for('main.add_resource') }}" method="post">
+        <input type="text" name="name" placeholder="Resource name" required />
+        <button type="submit">Add</button>
+    </form>
 </body>
 </html>

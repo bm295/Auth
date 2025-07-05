@@ -1,25 +1,38 @@
-# Web Game Football Manager
+# Distributed Resource Counter
 
-Đây là một dự án minh họa trò chơi Quản lý bóng đá đơn giản bằng Python và Flask.
-Bạn điều khiển một đội bóng gồm 11 cầu thủ và thi đấu với các câu lạc bộ do máy
-điều khiển.
+This repository demonstrates a minimal distributed system using Python and Flask.
+Each node maintains a set of named counters representing shared resources. When a
+resource is added or incremented on one node, the updated resource map is
+broadcast to its peers using HTTP requests. Peers merge the data by keeping the
+highest value for each resource.
 
-Mỗi cầu thủ có chỉ số năng lực ngẫu nhiên từ 60 đến 90. Khi bắt đầu trận đấu,
-kết quả được tính dựa trên chỉ số trung bình của đội bạn và đội đối phương.
+The example is intentionally simple so you can run multiple nodes locally and
+observe them replicating the resource counters between each other.
 
-Chú ý: Mã nguồn được tối giản hóa để làm mô hình minh họa, không phải là game
-Quản lý bóng đá hoàn chỉnh.
-
-## Cài đặt
+## Installation
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Chạy game
+## Running
+
+Start two or more instances. Each node must know the addresses of the others via
+the `PEERS` environment variable. Optionally seed some resources using the
+`RESOURCES` variable.
 
 ```bash
-python run.py
+# terminal 1
+export PEERS="http://localhost:5001"
+export RESOURCES="cpu,memory"
+FLASK_APP=run.py flask run -p 5000
+
+# terminal 2
+export PEERS="http://localhost:5000"
+export RESOURCES="cpu,memory"
+FLASK_APP=run.py flask run -p 5001
 ```
 
-Sau đó truy cập `http://localhost:5000` để bắt đầu trò chơi.
+Open a browser at `http://localhost:5000` or `http://localhost:5001`. Add or
+increment resources on either instance and watch them stay in sync across all
+nodes.
