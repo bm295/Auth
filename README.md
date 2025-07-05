@@ -6,7 +6,9 @@ broadcasts the new value to its peers through HTTP requests. The peers then
 update their own counters if the received value is greater.
 
 The example is intentionally simple so you can run multiple nodes locally and
-observe them replicating the counter value between each other.
+observe them replicating the counter value between each other. A helper script
+`cluster_demo.py` is included to automatically start two nodes for testing the
+shared counter.
 
 ## Installation
 
@@ -32,3 +34,14 @@ FLASK_APP=run.py flask run -p 5001
 Open a browser at `http://localhost:5000` or `http://localhost:5001` and click
 "Increment" on either instance. The counter value should stay in sync across all
 nodes.
+
+### Running the demo script
+
+To quickly see two nodes sharing the same counter, run:
+
+```bash
+python cluster_demo.py
+```
+
+This starts two Flask servers on ports 5000 and 5001 that replicate the counter
+value between them.
