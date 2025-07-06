@@ -10,6 +10,8 @@
         .nodes { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
         .node { border: 1px solid #333; border-radius: 4px; padding: 1rem; cursor: pointer; flex: 0 0 120px; text-align: center; background-color: #f4f4f4; }
         .node:hover { background-color: #e0e0e0; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+        th, td { border: 1px solid #333; padding: 0.5rem; text-align: center; }
         @media (max-width: 600px) {
             .node { flex: 0 0 45%; }
         }
@@ -19,6 +21,17 @@
     <div class="container">
         <h1>Distributed Voting Demo</h1>
         <p>Total votes recorded: <span id="counter">{{ value }}</span></p>
+        <h2>Local counters</h2>
+        <table>
+            <thead>
+                <tr><th>Node ID</th><th>Count</th></tr>
+            </thead>
+            <tbody>
+                {% for nid, count in counts.items() %}
+                <tr><td>{{ nid }}</td><td>{{ count }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
         <div class="nodes">
             {% for node in nodes %}
             <div class="node" data-node="{{ loop.index }}">{{ node }}</div>
