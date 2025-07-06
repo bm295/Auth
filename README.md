@@ -21,6 +21,9 @@ pip install -r requirements.txt
 Start two or more instances. Each node must know the addresses of the others via
 the `PEERS` environment variable.
 
+If `PEERS` is not provided, the application assumes a peer at
+`http://localhost:5001` so the UI always shows two clickable nodes.
+
 ```bash
 # terminal 1
 export PEERS="http://localhost:5001"
