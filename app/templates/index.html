@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Distributed Counter</title>
+    <title>Distributed Voting</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
         .container { max-width: 600px; margin: 0 auto; padding: 1rem; }
@@ -17,8 +17,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Simple Distributed Counter</h1>
-        <p>Cluster-wide counter value: <span id="counter">{{ value }}</span></p>
+        <h1>Distributed Voting Demo</h1>
+        <p>Total votes recorded: <span id="counter">{{ value }}</span></p>
         <div class="nodes">
             {% for node in nodes %}
             <div class="node" data-node="{{ loop.index }}">{{ node }}</div>
@@ -28,7 +28,7 @@
     <script>
         document.querySelectorAll('.node').forEach(function(el) {
             el.addEventListener('click', function() {
-                fetch('{{ url_for('main.increment') }}', {method: 'POST'})
+                fetch('{{ url_for('main.vote') }}', {method: 'POST'})
                     .then(function() { window.location.reload(); });
             });
         });

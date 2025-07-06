@@ -1,5 +1,16 @@
 import os
 import requests
+class StubVoteDB:
+    """Very small in-memory stand-in for a real database."""
+
+    def __init__(self, initial_count: int = 0):
+        self.count = initial_count
+
+    def get_count(self) -> int:
+        return self.count
+
+    def add_vote(self) -> None:
+        self.count += 1
 
 
 class Node:
@@ -9,9 +20,14 @@ class Node:
         if not self.peers:
             default_peer = os.getenv("DEFAULT_PEER", "http://localhost:5001")
             self.peers = [default_peer]
-        self.value = 0
 
-    def increment(self):
+        initial = int(os.getenv("INITIAL_VOTES", "0"))
+        self.db = StubVoteDB(initial)
+        self.value = self.db.get_count()
+
+
+    def record_vote(self):
+        self.db.add_vote()
         self.value += 1
         self.replicate()
 

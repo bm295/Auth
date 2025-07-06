@@ -8,9 +8,9 @@ def index():
     nodes.extend(current_app.node.peers)
     return render_template('index.html', value=current_app.node.value, nodes=nodes)
 
-@main_bp.route('/increment', methods=['POST'])
-def increment():
-    current_app.node.increment()
+@main_bp.route('/vote', methods=['POST'])
+def vote():
+    current_app.node.record_vote()
     return redirect(url_for('main.index'))
 
 @main_bp.route('/update', methods=['POST'])

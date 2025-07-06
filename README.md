@@ -1,14 +1,15 @@
-# Simple Distributed Counter
+# Distributed Voting System
 
-This repository demonstrates a minimal distributed system using Python and Flask.
-Each node maintains an integer counter. When a node increments its counter it
-broadcasts the new value to its peers through HTTP requests. The peers then
-update their own counters if the received value is greater.
+This repository demonstrates a minimal distributed voting system using Python
+and Flask. For the sake of the example we do not use a real database. Instead a
+stub component returns a predefined vote count so you can focus on the logic of
+replicating values between nodes. Each node keeps a local counter and when a
+vote is recorded the new count is replicated to all peers.
 
 The example is intentionally simple so you can run multiple nodes locally and
-observe them replicating the counter value between each other. A helper script
-`cluster_demo.py` is included to automatically start two nodes for testing the
-shared counter.
+observe them replicating the vote count between each other. A helper script
+`cluster_demo.py` is included to automatically start two nodes for testing vote
+replication.
 
 ## Installation
 
@@ -35,10 +36,9 @@ FLASK_APP=run.py flask run -p 5001
 ```
 
 Open a browser at `http://localhost:5000` or `http://localhost:5001` and click
-any of the node boxes. Each box represents a node in the cluster and is
-clickable. Tapping or clicking a box increments the shared counter which then
-replicates to all nodes. The layout is responsive so it works well on mobile
-screens.
+any of the node boxes. Each box represents a node in the cluster and casting a
+vote updates the shared resource while synchronizing the counters on all
+nodes. The layout is responsive so it works well on mobile screens.
 
 ### Running the demo script
 
@@ -50,3 +50,39 @@ python cluster_demo.py
 
 This starts two Flask servers on ports 5000 and 5001 that replicate the counter
 value between them.
+
+### Distributed Voting Example
+
+This section illustrates how nodes can share a resource and maintain
+incremental counters when processing votes.
+
+**Scenario**
+
+* Multiple nodes accept user votes at the same time.
+* Votes are written to a shared resource so each node has a consistent view.
+* Each node keeps a vote counter that increments whenever a vote is recorded.
+
+**Example Diagram**
+
+```
+       Node A                      Node B
+     ┌───────────┐              ┌───────────┐
+     │ Vote Count│              │ Vote Count│
+     │  Counter  │              │  Counter  │
+     └───────────┘              └───────────┘
+             │ Increment (+1)         │ Increment (+1)
+             ▼                        ▼
+        ┌───────────────────────────────────┐
+        │                                   │
+        │        Shared Resource            │
+        │        (Vote Records)             │
+        │                                   │
+        └───────────────────────────────────┘
+```
+
+**How it Works**
+
+1. Nodes A and B receive votes concurrently.
+2. Each node increments its local counter and writes to the shared resource.
+3. The resource keeps the vote records consistent while counters track totals.
+4. Distributed algorithms keep the counters in sync even with concurrent updates.
