@@ -4,8 +4,8 @@ main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/')
 def index():
-    nodes = [request.host_url.rstrip('/')]
-    nodes.extend(current_app.node.peers)
+    # Display two nodes simply labeled A and B rather than showing URLs
+    nodes = ["Node A", "Node B"]
     return render_template(
         'index.html',
         value=current_app.node.value,

@@ -19,8 +19,8 @@ pip install -r requirements.txt
 
 ## Running
 
-Start two or more instances. Each node must know the addresses of the others via
-the `PEERS` environment variable.
+Start two instances and assign them the node identifiers `A` and `B`.  Each node
+must know the addresses of the others via the `PEERS` environment variable.
 
 If `PEERS` is not provided, the application assumes a peer at
 `http://localhost:5001` so the UI always shows two clickable nodes.
@@ -28,10 +28,12 @@ If `PEERS` is not provided, the application assumes a peer at
 ```bash
 # terminal 1
 export PEERS="http://localhost:5001"
+export NODE_ID=A
 FLASK_APP=run.py flask run -p 5000
 
 # terminal 2
 export PEERS="http://localhost:5000"
+export NODE_ID=B
 FLASK_APP=run.py flask run -p 5001
 ```
 
@@ -49,7 +51,8 @@ python cluster_demo.py
 ```
 
 This starts two Flask servers on ports 5000 and 5001 that replicate the counter
-value between them.
+value between them. Each process is assigned the IDs `A` and `B` respectively
+so the web UI displays "Node A" and "Node B".
 
 ### Distributed Voting Example
 

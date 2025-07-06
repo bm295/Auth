@@ -1,5 +1,4 @@
 import os
-import uuid
 import requests
 
 class StubVoteDB:
@@ -26,7 +25,9 @@ class Node:
         initial = int(os.getenv("INITIAL_VOTES", "0"))
         self.db = StubVoteDB(initial)
 
-        self.node_id = os.getenv("NODE_ID", str(uuid.uuid4()))
+        # default to node "A" if no identifier is provided so that running two
+        # nodes locally shows "Node A" and "Node B" in the UI
+        self.node_id = os.getenv("NODE_ID", "A")
         self.counts = {self.node_id: self.db.get_count()}
         self.value = self._calculate_total()
 
