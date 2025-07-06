@@ -6,7 +6,12 @@ main_bp = Blueprint('main', __name__)
 def index():
     nodes = [request.host_url.rstrip('/')]
     nodes.extend(current_app.node.peers)
-    return render_template('index.html', value=current_app.node.value, nodes=nodes)
+    return render_template(
+        'index.html',
+        value=current_app.node.value,
+        nodes=nodes,
+        counts=current_app.node.counts,
+    )
 
 @main_bp.route('/vote', methods=['POST'])
 def vote():
