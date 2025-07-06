@@ -18,7 +18,7 @@
 <body>
     <div class="container">
         <h1>Simple Distributed Counter</h1>
-        <p>Current value: <span id="counter">{{ value }}</span></p>
+        <p>Cluster-wide counter value: <span id="counter">{{ value }}</span></p>
         <div class="nodes">
             {% for node in nodes %}
             <div class="node" data-node="{{ loop.index }}">{{ node }}</div>
