@@ -16,7 +16,7 @@ def vote():
 @main_bp.route('/update', methods=['POST'])
 def update():
     data = request.get_json() or {}
-    value = data.get('value')
-    if isinstance(value, int):
-        current_app.node.set_value(value)
+    counts = data.get('counts')
+    if isinstance(counts, dict):
+        current_app.node.merge_counts(counts)
     return jsonify({'status': 'ok'})

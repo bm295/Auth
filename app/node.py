@@ -1,5 +1,7 @@
 import os
+import uuid
 import requests
+
 class StubVoteDB:
     """Very small in-memory stand-in for a real database."""
 
@@ -23,22 +25,38 @@ class Node:
 
         initial = int(os.getenv("INITIAL_VOTES", "0"))
         self.db = StubVoteDB(initial)
-        self.value = self.db.get_count()
+
+        self.node_id = os.getenv("NODE_ID", str(uuid.uuid4()))
+        self.counts = {self.node_id: self.db.get_count()}
+        self.value = self._calculate_total()
+
+    def _calculate_total(self) -> int:
+        return sum(self.counts.values())
 
 
     def record_vote(self):
         self.db.add_vote()
-        self.value += 1
+        self.counts[self.node_id] = self.db.get_count()
+        self.value = self._calculate_total()
         self.replicate()
 
-    def set_value(self, new_value: int):
-        if new_value > self.value:
-            self.value = new_value
+    def merge_counts(self, peer_counts: dict):
+        updated = False
+        for node_id, count in peer_counts.items():
+            if count > self.counts.get(node_id, 0):
+                self.counts[node_id] = count
+                updated = True
+        if updated:
+            self.value = self._calculate_total()
 
     def replicate(self):
         for peer in self.peers:
             try:
-                requests.post(f"{peer}/update", json={"value": self.value}, timeout=1)
+                requests.post(
+                    f"{peer}/update",
+                    json={"counts": self.counts},
+                    timeout=1,
+                )
             except requests.RequestException:
                 # ignore failed replication
                 pass
