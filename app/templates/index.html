@@ -19,7 +19,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Distributed Voting Demo</h1>
+        <h1>Local Voting Demo</h1>
         <p>Total votes recorded: <span id="counter">{{ value }}</span></p>
         <h2>Local counters</h2>
         <table>
@@ -34,14 +34,14 @@
         </table>
         <div class="nodes">
             {% for node in nodes %}
-            <div class="node" data-url="{{ node.url }}">Node {{ node.id }}</div>
+            <div class="node" data-id="{{ node.id }}">Node {{ node.id }}</div>
             {% endfor %}
         </div>
     </div>
     <script>
         document.querySelectorAll('.node').forEach(function(el) {
             el.addEventListener('click', function() {
-                fetch(el.dataset.url + '/vote', {method: 'POST', mode: 'no-cors'})
+                fetch('/vote/' + el.dataset.id, {method: 'POST'})
                     .finally(function() { window.location.reload(); });
             });
         });
