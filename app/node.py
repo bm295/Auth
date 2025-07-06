@@ -26,9 +26,14 @@ class Node:
         self.db = StubVoteDB(initial)
 
         # default to node "A" if no identifier is provided so that running two
-        # nodes locally shows "Node A" and "Node B" in the UI
+        # nodes locally shows "Node A" and "Node B" in the UI.  Pre-populate
+        # counters for both nodes so the UI always displays both entries.
         self.node_id = os.getenv("NODE_ID", "A")
-        self.counts = {self.node_id: self.db.get_count()}
+
+        # maintain counters for both Node A and Node B regardless of which
+        # identifier this instance uses
+        self.counts = {"A": 0, "B": 0}
+        self.counts[self.node_id] = self.db.get_count()
         self.value = self._calculate_total()
 
     def _calculate_total(self) -> int:
