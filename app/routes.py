@@ -4,8 +4,20 @@ main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/')
 def index():
-    # Display two nodes simply labeled A and B rather than showing URLs
-    nodes = ["Node A", "Node B"]
+    """Render the main page with node addresses for voting."""
+    local_url = request.host_url.rstrip('/')
+
+    if current_app.node.peers:
+        peer_url = current_app.node.peers[0]
+    else:
+        peer_url = local_url
+
+    other_id = 'B' if current_app.node.node_id == 'A' else 'A'
+    nodes = [
+        {"id": current_app.node.node_id, "url": local_url},
+        {"id": other_id, "url": peer_url},
+    ]
+
     return render_template(
         'index.html',
         value=current_app.node.value,

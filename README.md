@@ -38,9 +38,11 @@ FLASK_APP=run.py flask run -p 5001
 ```
 
 Open a browser at `http://localhost:5000` or `http://localhost:5001` and click
-any of the node boxes. Each box represents a node in the cluster and casting a
-vote updates the shared resource while synchronizing the counters on all
-nodes. The layout is responsive so it works well on mobile screens.
+any of the node boxes. Each button sends a vote request directly to the
+corresponding node (e.g. clicking **Node B** from the page served on port 5000
+will post to `http://localhost:5001/vote`). Each node keeps its own counter and
+replicates the results to its peers so the totals stay in sync. The layout is
+responsive so it works well on mobile screens.
 
 ### Running the demo script
 
