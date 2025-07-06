@@ -32,8 +32,10 @@ FLASK_APP=run.py flask run -p 5001
 ```
 
 Open a browser at `http://localhost:5000` or `http://localhost:5001` and click
-"Increment" on either instance. The counter value should stay in sync across all
-nodes.
+any of the node boxes. Each box represents a node in the cluster and is
+clickable. Tapping or clicking a box increments the shared counter which then
+replicates to all nodes. The layout is responsive so it works well on mobile
+screens.
 
 ### Running the demo script
 

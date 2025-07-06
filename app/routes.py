@@ -4,7 +4,9 @@ main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/')
 def index():
-    return render_template('index.html', value=current_app.node.value)
+    nodes = [request.host_url.rstrip('/')]
+    nodes.extend(current_app.node.peers)
+    return render_template('index.html', value=current_app.node.value, nodes=nodes)
 
 @main_bp.route('/increment', methods=['POST'])
 def increment():
