@@ -21,3 +21,10 @@ def index():
 def vote(node_id):
     current_app.node.record_vote(node_id.upper())
     return redirect(url_for('main.index'))
+
+
+@main_bp.route('/slow_vote/<node_id>', methods=['POST'])
+def slow_vote(node_id):
+    """Record a vote with an artificial delay to demonstrate latency."""
+    current_app.node.record_vote_with_latency(node_id.upper(), 2)
+    return redirect(url_for('main.index'))

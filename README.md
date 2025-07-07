@@ -78,3 +78,17 @@ incremental counters when processing votes.
 2. Each node increments its local counter and writes to the shared resource.
 3. The resource keeps the vote records consistent while counters track totals.
 4. Distributed algorithms keep the counters in sync even with concurrent updates.
+
+## Demonstrating Latency
+
+A common challenge in distributed systems is network latency. To see how delayed
+communication affects user experience, the application includes a "slow" voting
+endpoint that sleeps for two seconds before recording a vote. Buttons labelled
+"Slow A" and "Slow B" trigger this delayed path so you can compare response
+times with the normal voting flow.
+
+Run the app as usual and click the slow buttons to observe the latency impact:
+
+```bash
+FLASK_APP=run.py flask run -p 5000
+```

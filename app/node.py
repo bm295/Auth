@@ -1,5 +1,7 @@
 """Simple local vote counter."""
 
+import time
+
 class Node:
     """Maintain local counters for nodes A and B."""
 
@@ -15,3 +17,8 @@ class Node:
         if node_id in self.counts:
             self.counts[node_id] += 1
             self.value = self._calculate_total()
+
+    def record_vote_with_latency(self, node_id: str, delay_seconds: float) -> None:
+        """Increment the counter after an artificial delay."""
+        time.sleep(max(delay_seconds, 0))
+        self.record_vote(node_id)
