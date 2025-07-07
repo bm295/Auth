@@ -10,6 +10,7 @@
         .nodes { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
         .node { border: 1px solid #333; border-radius: 4px; padding: 1rem; cursor: pointer; flex: 0 0 120px; text-align: center; background-color: #f4f4f4; }
         .node:hover { background-color: #e0e0e0; }
+        .node.slow { background-color: #ffe5e5; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
         th, td { border: 1px solid #333; padding: 0.5rem; text-align: center; }
         @media (max-width: 600px) {
@@ -35,13 +36,18 @@
         <div class="nodes">
             {% for node in nodes %}
             <div class="node" data-id="{{ node.id }}">Node {{ node.id }}</div>
+            <div class="node slow" data-id="{{ node.id }}">Slow {{ node.id }}</div>
             {% endfor %}
         </div>
     </div>
     <script>
         document.querySelectorAll('.node').forEach(function(el) {
             el.addEventListener('click', function() {
-                fetch('/vote/' + el.dataset.id, {method: 'POST'})
+                var url = '/vote/' + el.dataset.id;
+                if (el.classList.contains('slow')) {
+                    url = '/slow_vote/' + el.dataset.id;
+                }
+                fetch(url, {method: 'POST'})
                     .finally(function() { window.location.reload(); });
             });
         });
