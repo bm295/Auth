@@ -92,3 +92,7 @@ Run the app as usual and click the slow buttons to observe the latency impact:
 ```bash
 FLASK_APP=run.py flask run -p 5000
 ```
+
+## Cache Definition in Distributed Systems
+
+A cache is a temporary storage layer that holds a subset of data so future requests are served faster. In distributed systems, caches may be shared among multiple nodes to reduce latency and load on the underlying resource. The `cluster_demo.py` script uses a shared dictionary managed by Python's `multiprocessing` module as a simple distributed cache for vote counters.
