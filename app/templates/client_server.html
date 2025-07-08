@@ -5,11 +5,31 @@
     <title>Client Server Model</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; }
+        button { padding: 0.5rem 1rem; }
     </style>
 </head>
 <body>
     <h1>Client-Server Model</h1>
-    <p>This demo will be implemented later.</p>
+    <p>
+        Click the button below to request the current time from the server. The
+        response is displayed on the page, demonstrating a simple fetch request
+        from client to server.
+    </p>
+    <button id="timeBtn">Get Server Time</button>
+    <p id="result"></p>
     <p><a href="{{ url_for('main.home') }}">Back to menu</a></p>
+
+    <script>
+        document.getElementById('timeBtn').addEventListener('click', function () {
+            fetch('/server-time')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').textContent = 'Server time: ' + data.time;
+                })
+                .catch(err => {
+                    document.getElementById('result').textContent = 'Error: ' + err;
+                });
+        });
+    </script>
 </body>
 </html>
