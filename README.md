@@ -27,10 +27,11 @@ FLASK_APP=run.py flask run -p 5000
 FLASK_APP=run.py flask run -p 5001
 ```
 
-Open a browser at `http://localhost:5000/voting` (or `http://localhost:5001/voting`)
-and click any of the node boxes. Each button posts to the local server and
-increments the matching counter. The layout is responsive so it works well on
-mobile screens.
+Open a browser at `http://localhost:5000/` (or `http://localhost:5001/`) and
+select a demo. The voting page shows local counters that update with each click
+while the client&ndash;server page requests the current server time. Each voting
+button posts to the local server and increments the matching counter. The layout
+is responsive so it works well on mobile screens.
 
 ### Running the demo script
 

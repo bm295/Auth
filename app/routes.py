@@ -1,4 +1,5 @@
-from flask import Blueprint, current_app, render_template, redirect, url_for
+from flask import Blueprint, current_app, render_template, redirect, url_for, jsonify
+import time
 
 main_bp = Blueprint('main', __name__)
 
@@ -26,8 +27,14 @@ def voting():
 
 @main_bp.route('/client-server')
 def client_server():
-    """Placeholder page for the client-server model."""
+    """Page demonstrating a basic client-server interaction."""
     return render_template('client_server.html')
+
+
+@main_bp.route('/server-time')
+def server_time():
+    """Return the current server time."""
+    return jsonify({'time': time.strftime('%H:%M:%S')})
 
 @main_bp.route('/vote/<node_id>', methods=['POST'])
 def vote(node_id):
