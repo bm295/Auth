@@ -1,18 +1,20 @@
-# PricePilot Next (Angular 19)
+# ClipForge Studio (Angular 19)
 
-PricePilot Next is a new product concept designed to monetize quickly in real markets: an AI-assisted dynamic pricing SaaS for independent grocery and convenience chains.
+ClipForge Studio is a Short-Form Video Editing Service concept for creators, solo brands, and social media teams.
 
-## Why this can make money next month
+## Product concept
 
-- Stores already have POS exports; onboarding can happen in under 48 hours.
-- Pricing recommendations create measurable gross-margin lift in the first week.
-- Subscription + performance fee model aligns incentives and generates recurring revenue.
+Convert long-form content into vertical short videos using AI-assisted editing:
+
+- Detects strong hook moments and auto-generates cuts.
+- Adds platform-optimized subtitles and timing.
+- Exports for TikTok, Instagram Reels, and YouTube Shorts.
 
 ## Revenue model
 
-- **Starter**: $149/month (up to 3,000 SKUs)
-- **Growth**: $399/month (up to 15,000 SKUs)
-- **Performance add-on**: 1% of verified incremental gross profit
+- **Starter**: $39/month
+- **Creator Pro**: $99/month
+- **Agency**: $249/month
 
 ## Quick start
 
