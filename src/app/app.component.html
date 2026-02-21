@@ -1,35 +1,49 @@
 <main class="layout">
   <section class="hero">
-    <p class="badge">Ship-ready SaaS concept for next month</p>
-    <h1>{{ productName }}</h1>
+    <p class="badge">Short-Form Video Editing Service</p>
+    <h1>{{ serviceName }}</h1>
     <p>
-      AI-assisted dynamic pricing for independent grocery and convenience stores.
-      Retailers upload POS data and receive daily margin-safe price moves they can publish in minutes.
+      Turn long-form content into high-retention vertical videos in minutes.
+      ClipForge Studio helps creators and teams produce polished shorts with smart cuts,
+      caption styling, and platform-ready exports.
     </p>
     <div class="cta-row">
-      <button type="button">Start 14-day pilot</button>
-      <a href="#monetization">See revenue model</a>
+      <button type="button">Start Free Trial</button>
+      <a href="#pricing">View pricing</a>
     </div>
   </section>
 
   <section>
-    <h2>Core value proposition</h2>
+    <h2>Why creators choose ClipForge</h2>
     <div class="cards">
-      @for (feature of features; track feature.title) {
+      @for (item of highlights; track item.title) {
         <article>
-          <h3>{{ feature.title }}</h3>
-          <p>{{ feature.description }}</p>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
         </article>
       }
     </div>
   </section>
 
-  <section id="monetization">
-    <h2>How this can earn money quickly</h2>
-    <ul>
-      @for (plan of monetization; track plan) {
-        <li>{{ plan }}</li>
+  <section>
+    <h2>How it works</h2>
+    <ol>
+      @for (step of workflow; track step) {
+        <li>{{ step }}</li>
       }
-    </ul>
+    </ol>
+  </section>
+
+  <section id="pricing">
+    <h2>Simple plans for every stage</h2>
+    <div class="pricing-grid">
+      @for (tier of pricing; track tier.plan) {
+        <article class="price-card">
+          <h3>{{ tier.plan }}</h3>
+          <p class="amount">{{ tier.amount }}</p>
+          <p>{{ tier.details }}</p>
+        </article>
+      }
+    </div>
   </section>
 </main>
