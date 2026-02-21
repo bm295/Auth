@@ -1,0 +1,35 @@
+<main class="layout">
+  <section class="hero">
+    <p class="badge">Ship-ready SaaS concept for next month</p>
+    <h1>{{ productName }}</h1>
+    <p>
+      AI-assisted dynamic pricing for independent grocery and convenience stores.
+      Retailers upload POS data and receive daily margin-safe price moves they can publish in minutes.
+    </p>
+    <div class="cta-row">
+      <button type="button">Start 14-day pilot</button>
+      <a href="#monetization">See revenue model</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Core value proposition</h2>
+    <div class="cards">
+      @for (feature of features; track feature.title) {
+        <article>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section id="monetization">
+    <h2>How this can earn money quickly</h2>
+    <ul>
+      @for (plan of monetization; track plan) {
+        <li>{{ plan }}</li>
+      }
+    </ul>
+  </section>
+</main>

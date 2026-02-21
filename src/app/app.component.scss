@@ -1,0 +1,71 @@
+.layout {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+  display: grid;
+  gap: 2rem;
+}
+
+.hero {
+  background: #0f172a;
+  color: #f8fafc;
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+.badge {
+  display: inline-flex;
+  font-size: 0.85rem;
+  margin: 0;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.25);
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0;
+}
+
+.cta-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  button {
+    border: 0;
+    background: #38bdf8;
+    color: #082f49;
+    border-radius: 999px;
+    padding: 0.75rem 1rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  a {
+    color: #bae6fd;
+    text-decoration: none;
+    font-weight: 600;
+  }
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+
+  article {
+    background: white;
+    border-radius: 14px;
+    padding: 1rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  }
+}
+
+ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.4rem;
+}
