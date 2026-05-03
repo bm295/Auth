@@ -1,26 +1,14 @@
-# ClipForge Studio (Angular 19)
+# .NET Authentication Demo
 
-ClipForge Studio is a Short-Form Video Editing Service concept for creators, solo brands, and social media teams.
+This repository is rewritten as an ASP.NET Core web application that demonstrates two authentication approaches:
 
-## Product concept
+- JWT bearer token authentication
+- Opaque bearer token authentication (custom handler)
 
-Convert long-form content into vertical short videos using AI-assisted editing:
-
-- Detects strong hook moments and auto-generates cuts.
-- Adds platform-optimized subtitles and timing.
-- Exports for TikTok, Instagram Reels, and YouTube Shorts.
-
-## Revenue model
-
-- **Starter**: $39/month
-- **Creator Pro**: $99/month
-- **Agency**: $249/month
-
-## Quick start
+## Run
 
 ```bash
-npm install
-npm start
+dotnet run
 ```
 
-Then open `http://localhost:4200/`.
+Open the app at `http://localhost:5000` (or the URL shown by `dotnet run`).
