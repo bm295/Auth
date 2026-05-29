@@ -1,36 +1,23 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Build artifacts
+[Bb]in/
+[Oo]bj/
 
-/dist
-/tmp
-/out-tsc
-/bazel-out
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
 
-/node_modules
-npm-debug.log
-yarn-error.log
-
-/.angular/cache
-
-# IDEs and editors
+# IDEs/editors
+.vs/
+.vscode/
 .idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
 
-.vscode/*
-!.vscode/extensions.json
-!.vscode/launch.json
-!.vscode/tasks.json
+# NuGet
+*.nupkg
+packages/
 
-# misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-
-# System Files
+# OS files
 .DS_Store
 Thumbs.db
