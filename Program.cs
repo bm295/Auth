@@ -1,4 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -49,6 +51,22 @@ builder.Services
     .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(BasicScheme, _ => { });
 
 builder.Services.AddAuthorization();
+builder.Services
+    .AddHttpClient<ApiKeyValidationClient>((services, client) =>
+    {
+        var baseUrl = services.GetRequiredService<IConfiguration>()["ApiKeyValidation:BaseUrl"];
+        if (Uri.TryCreate(baseUrl, UriKind.Absolute, out var baseUri))
+        {
+            client.BaseAddress = baseUri;
+        }
+    })
+    .AddStandardResilienceHandler(options =>
+    {
+        options.CircuitBreaker.FailureRatio = 0.5;
+        options.CircuitBreaker.MinimumThroughput = 5;
+        options.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(30);
+        options.CircuitBreaker.BreakDuration = TimeSpan.FromSeconds(15);
+    });
 
 var app = builder.Build();
 
@@ -167,27 +185,29 @@ app.Run();
 sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
     private const string HeaderName = "X-API-Key";
-    private const string ExpectedApiKey = "demo-api-key-123";
+    private readonly ApiKeyValidationClient _apiKeyValidationClient;
 
     public ApiKeyAuthenticationHandler(
         IOptionsMonitor<AuthenticationSchemeOptions> options,
         ILoggerFactory logger,
         UrlEncoder encoder,
-        ISystemClock clock)
+        ISystemClock clock,
+        ApiKeyValidationClient apiKeyValidationClient)
         : base(options, logger, encoder, clock)
     {
+        _apiKeyValidationClient = apiKeyValidationClient;
     }
 
-    protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+    protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         if (!Request.Headers.TryGetValue(HeaderName, out var value))
         {
-            return Task.FromResult(AuthenticateResult.Fail("Missing X-API-Key header."));
+            return AuthenticateResult.Fail("Missing X-API-Key header.");
         }
 
-        if (!string.Equals(value.ToString(), ExpectedApiKey, StringComparison.Ordinal))
+        if (!await _apiKeyValidationClient.IsValidAsync(value.ToString(), Context.RequestAborted))
         {
-            return Task.FromResult(AuthenticateResult.Fail("Invalid API key."));
+            return AuthenticateResult.Fail("Invalid API key.");
         }
 
         var claims = new[]
@@ -199,8 +219,41 @@ sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<AuthenticationS
 
         var identity = new ClaimsIdentity(claims, Scheme.Name);
         var ticket = new AuthenticationTicket(new ClaimsPrincipal(identity), Scheme.Name);
-        return Task.FromResult(AuthenticateResult.Success(ticket));
+        return AuthenticateResult.Success(ticket);
     }
+}
+
+sealed class ApiKeyValidationClient(HttpClient httpClient, IConfiguration configuration)
+{
+    private const string DemoApiKey = "demo-api-key-123";
+    private readonly bool _usesRemoteService =
+        Uri.TryCreate(configuration["ApiKeyValidation:BaseUrl"], UriKind.Absolute, out _);
+
+    public async Task<bool> IsValidAsync(string apiKey, CancellationToken cancellationToken)
+    {
+        // Keep the playground self-contained unless a remote validator is configured.
+        if (!_usesRemoteService)
+        {
+            return string.Equals(apiKey, DemoApiKey, StringComparison.Ordinal);
+        }
+
+        using var response = await httpClient.PostAsJsonAsync(
+            "api-keys/validate",
+            new { apiKey },
+            cancellationToken);
+
+        if (response.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden)
+        {
+            return false;
+        }
+
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<ApiKeyValidationResponse>(
+            cancellationToken: cancellationToken);
+        return result?.IsValid is true;
+    }
+
+    private sealed record ApiKeyValidationResponse(bool IsValid);
 }
 
 sealed class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
