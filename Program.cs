@@ -61,8 +61,10 @@ app.MapGet("/auth/jwt/token", () =>
 {
     var claims = new[]
     {
-        new Claim(ClaimTypes.NameIdentifier, "jwt-user-1"),
+        // Keep JWT registered claims explicit so Java consumers receive the same contract.
+        new Claim(JwtRegisteredClaimNames.Sub, "manager@contoso.demo"),
         new Claim(ClaimTypes.Name, "JWT Demo User"),
+        new Claim("tenant_id", "contoso"),
         new Claim("role", "reader"),
         new Claim("auth_method", "jwt")
     };
