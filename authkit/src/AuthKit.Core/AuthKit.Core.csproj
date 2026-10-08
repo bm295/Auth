@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PackageId>LocalSessions.AuthKit.Core</PackageId>
+    <AssemblyName>LocalSessions.AuthKit.Core</AssemblyName>
+    <RootNamespace>LocalSessions.AuthKit.Core</RootNamespace>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+</Project>
