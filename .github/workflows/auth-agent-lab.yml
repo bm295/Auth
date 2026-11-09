@@ -1,0 +1,40 @@
+name: Auth agent lab
+on:
+  pull_request:
+    paths:
+      - 'tools/auth-agent-lab/**'
+      - 'java/auth-jwt-library/**'
+      - 'Auth.csproj'
+      - 'Program.cs'
+      - '.github/workflows/auth-agent-lab.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  jwt-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: java/auth-jwt-library/pom.xml
+      - run: python3 tools/auth-agent-lab/run.py --mode mock --mutation --minutes 5
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: auth-agent-lab-report
+          path: |
+            .auth-agent-lab/run-*/*.md
+            .auth-agent-lab/run-*/*.json
+            .auth-agent-lab/run-*/*.diff
+            .auth-agent-lab/run-*/*.log
+          include-hidden-files: true

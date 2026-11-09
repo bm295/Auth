@@ -22,3 +22,7 @@ packages/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Local Auth agent lab runs
+/.auth-agent-lab/
+/tools/auth-agent-lab/__pycache__/
